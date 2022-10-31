@@ -1,0 +1,88 @@
+How to use Angular JS
+
+1. Install Angular JS
+    a. npm install -g @angular/cli
+2. Create an Angular JS app
+    a. ng new my-app
+3. Run the app
+    a. cd appname
+    b. ng serve --open
+
+4. Complex part: Create components and modules
+
+Understand the main app code:
+    - App folder contains the main app code
+    - index.html, style.css, main.ts are the main files and their code is applied globally
+    - A module is a collection of components
+
+Components:
+    0. Set-up
+        - Empty app.component.html code
+        - Examples below are based in a TicToe Angular JS app
+            - name: name of the component
+    1. Create a component
+        - ng generate component name
+    2. Add the component to the app
+        - Open name.component.html and delete all default code
+        - Find selector located in component.ts, this is the html tag of that component
+        - Add it to app.component.html as a tag
+        - Add code to the component by modyfing the component.ts template attr:
+            - Adding variables ex:
+                template: `
+                    <h1>My First Angular App</h1>
+                    <p>My first paragraph {{ rando }} </p>
+                `
+                export class name {
+                    rando = Math.random();
+                }
+            - Add html input property ex:
+                template: `
+                <h1> My First Angular App </h1>
+                <p> My first paragraph {{ value }} </p>
+                `
+                export class name {
+                    @Input() value: 'X' | 'O';
+                }   
+                in app.component.html:
+                <component-name value="X"></component-name>
+        - Add logic code in component.ts, variables, lists, etc...
+        - Add heavy html inside component.html, not in template attr
+            - Add vars, the same as template above
+            - Add events ex:
+                name.component.html:
+                <button (click)="newGame()">Click me!</button>
+                name.component.ts:
+                export class name {
+                    newGame() {
+                        console.log('new game');
+                    }
+                }
+            - Add structural directives (contant that shows if a condition is met) = *ngIf ex:
+                name.component.html:
+                <h2 *ngIf="winner">
+                    Player {{ winner }} won the game!
+                </h2>
+                name.component.ts:
+                export class name {
+                    winner: string;
+                }
+                // If winner is not null, the h2 will be displayed
+            - Add loops in html ex:
+                name.component.html:
+                <main>
+                <app-square 
+                    *ngFor="let val of squares; let i = index"
+                    [value] = "val"
+                    (click) = "makeMove(i)" >
+                    <!-- This creates a template variable "val" that can be used in the name.component.html -->
+                </app-square>
+                </main>
+        - CSS code for the component goes in name.component.css
+    3. Add CSS libraries with premade styles
+        ex: nebular
+        - ng add @nebular/theme
+    4. Add a PWA to Angular JS app to make it install as native (Progressive Web App)
+        - ng add @angular/pwa
+        - ng add @angular/fire (to add firebase, or you could use a different host)
+        - ng build --prod
+        - ng run appname:deploy
