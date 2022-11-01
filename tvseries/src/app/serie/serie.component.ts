@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Serie } from './serie';
-import { defaultseries } from './dataSeries';
 import { SerieService } from './serie.service';
 
 @Component({
@@ -32,6 +31,7 @@ export class SerieComponent implements OnInit {
   setAverage(series: Serie[] = this.series) {
     // Get the average of the series seasons
     this.average = series.reduce((sum, serie) => sum + serie.seasons, 0) / series.length;
+
     this.caption = "Seasons average: " + this.average;
   }
 
